@@ -32,11 +32,11 @@ export default function Home() {
   return (
     <>
       <div>
-        <Navbar />
+        <Navbar search={search} setSearch={setSearch} />
       </div>
 
       <div>
-        <Carousal search={search} setSearch={setSearch} />
+        <Carousal />
       </div>
 
 
