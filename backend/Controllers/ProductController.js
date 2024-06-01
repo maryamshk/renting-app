@@ -3,8 +3,8 @@ const Category = require('../models/Category')
 
 module.exports.CreateProduct = async (req, res) => {
   try {
-    const { categoryName, name, img, options, description } = req.body;
-    if (!categoryName || !name || !img || !options || !description) {
+    const { categoryName, name, img, description, price, timePeriod } = req.body;
+    if (!categoryName || !name || !img || !description || !price || !timePeriod) {
       return res.status(400).send("Missing required credentials");
     }
     const product = Product.create(
@@ -12,8 +12,9 @@ module.exports.CreateProduct = async (req, res) => {
         categoryName,
         name,
         img,
-        options,
         description,
+        price,
+        timePeriod
       }
     )
     if (product) {

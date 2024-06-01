@@ -22,7 +22,6 @@ export default function Home() {
     const product = response.product;
     setitemCategory(category);
     setItem(product);
-
   }
 
   useEffect(() => {
@@ -57,8 +56,6 @@ export default function Home() {
                       <div key={filterItems._id} className='col-12 col-md-6 col-lg-3'>
                         <Card
                           Item={filterItems}
-                          option={filterItems.options[0]}
-
                         ></Card>
                       </div>
                     )

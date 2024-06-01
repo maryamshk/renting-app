@@ -1,87 +1,9 @@
-// import React, { useState } from 'react'
-// import { Link } from 'react-router-dom';
-
-// function Signup() {
-//   const [credentials, setcredentials] = useState({
-//     name: '',
-//     email: '',
-//     password: '',
-//     location: '',
-//   });
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     const response = await fetch("http://localhost:5000/api/createuser", {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify({ name: credentials.name, email: credentials.email, password: credentials.password, location: credentials.location })
-//     }
-//     );
-//     const json = await response.json();
-//     console.log(json);
-
-//     if (!json.success) {
-//       alert("enter valid credentials");
-//     }
-
-//   }
-
-//   const onChange = (event) => {
-//     setcredentials({ ...credentials, [event.target.name]: event.target.value })
-//   }
-//   return (
-//     <>
-//       <div className='container'>
-//         <form onSubmit={handleSubmit}>
-//           <div className="mb-3">
-//             <label htmlFor="name" className="form-label">Name</label>
-//             <input type="text" className="form-control" name='name' value={credentials.name} onChange={onChange} />
-//           </div>
-
-//           <div className="mb-3">
-//             <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-//             <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name='email' value={credentials.email} onChange={onChange} />
-//             <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-//           </div>
-//           <div className="mb-3">
-//             <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-//             <input type="password" className="form-control" id="exampleInputPassword1" name='password' value={credentials.password} onChange={onChange} />
-//           </div>
-//           <div className="mb-3">
-//             <label htmlFor="exampleInputPassword1" className="form-label">Location</label>
-//             <input type="text" className="form-control" name='location' value={credentials.location} onChange={onChange} />
-//           </div>
-//           <button type="submit" className="m-3 btn btn-success">Submit</button>
-//           <Link to="/login" className="m-3 btn btn-danger">Already a user</Link>
-//         </form>
-//       </div>
-//     </>
-//   )
-// }
-
-// export default Signup;
-
-
-
-
-
-
-
-
-
-
-
-
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { GoogleLoginButton, FacebookLoginButton } from 'react-social-login-buttons';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const [credentials, setCredentials] = useState({
@@ -89,36 +11,28 @@ const Signup = () => {
     email: '',
     password: '',
     location: '',
-    phoneNumber: '',
   });
+
+  const navigate = useNavigate();
 
   const [validationError, setValidationError] = useState(null);
 
-  const validatePhoneNumber = (phoneNumber) => {
-    const phoneRegex = /^[0-9]{10,15}$/;
-    return phoneRegex.test(phoneNumber);
-  };
-
   const validatePassword = (password) => {
-    const passwordRegex = /^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{6,}$/;
+    const passwordRegex = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*\W).{6,}$/;
     return passwordRegex.test(password);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!credentials.phoneNumber || !credentials.verificationCode || !credentials.name || !credentials.password) {
+    if (!credentials.name || !credentials.email || !credentials.password || !credentials.location) {
       setValidationError("Please fill in all fields.");
       return;
     }
 
-    if (!validatePhoneNumber(credentials.phoneNumber)) {
-      setValidationError("Please enter a valid phone number.");
-      return;
-    }
-
     if (!validatePassword(credentials.password)) {
-      setValidationError("Password must be at least 6 characters long and include at least one number and one letter.");
+      setValidationError("Password must be at least 6 characters long, with at least one number, one uppercase letter, and one special character.");
+
       return;
     }
 
@@ -137,7 +51,8 @@ const Signup = () => {
       if (!json.success) {
         setValidationError("Failed to create account. Please check your credentials and try again.");
       } else {
-        alert("Account created successfully!");
+        navigate('/login')
+
       }
     } catch (error) {
       setValidationError("An error occurred. Please try again later.");
@@ -154,28 +69,6 @@ const Signup = () => {
         <Title>Create your RentEase Account</Title>
         <Form onSubmit={handleSubmit}>
           <InputContainer>
-            <Label htmlFor="phoneNumber">Phone Number</Label>
-            <Input
-              type="text"
-              placeholder="Please enter your phone number"
-              name="phoneNumber"
-              value={credentials.phoneNumber}
-              onChange={onChange}
-              id="phoneNumber"
-            />
-          </InputContainer>
-          <InputContainer>
-            <Label htmlFor="verificationCode">Verification Code</Label>
-            <Input
-              type="text"
-              placeholder="Verification Code from WhatsApp"
-              name="verificationCode"
-              value={credentials.verificationCode}
-              onChange={onChange}
-              id="verificationCode"
-            />
-          </InputContainer>
-          <InputContainer>
             <Label htmlFor="name">Full Name</Label>
             <Input
               type="text"
@@ -184,6 +77,17 @@ const Signup = () => {
               value={credentials.name}
               onChange={onChange}
               id="name"
+            />
+          </InputContainer>
+          <InputContainer>
+            <Label htmlFor="name">Email</Label>
+            <Input
+              type="email"
+              placeholder="Enter your email"
+              name="email"
+              value={credentials.email}
+              onChange={onChange}
+              id="email"
             />
           </InputContainer>
           <InputContainer>
@@ -197,19 +101,21 @@ const Signup = () => {
               id="password"
             />
           </InputContainer>
+          <InputContainer>
+            <Label htmlFor="password">Location</Label>
+            <Input
+              type="text"
+              placeholder="Enter your Location"
+              name="location"
+              value={credentials.location}
+              onChange={onChange}
+              id="location"
+            />
+          </InputContainer>
 
-          <CheckboxLabel>
-            <CheckboxInput type="checkbox" name="receiveOffers" />
-            I'd like to receive exclusive offers and promotions via SMS
-          </CheckboxLabel>
           {validationError && <div style={{ color: 'red', marginBottom: '1rem' }}>{validationError}</div>}
           <Button type="submit">SIGN UP</Button>
         </Form>
-        <OrDivider>Or, sign up with</OrDivider>
-        <SocialLogin>
-          <StyledGoogleLoginButton onClick={() => alert("Google sign up clicked")} />
-          <StyledFacebookLoginButton onClick={() => alert("Facebook sign up clicked")} />
-        </SocialLogin>
         <Footer>
           Already a member? <StyledLink to="/login">Login here</StyledLink>
         </Footer>

@@ -9,22 +9,22 @@ const CartDispatchContext = createContext();  //used to change state
 const reducer = (state, action) => {
   switch (action.type) {
     case "ADD":
-      return [...state, { id: action.id, name: action.name, quantity: action.quantity, size: action.size, price: action.price, img: action.img }]
+      return [...state, { id: action.id, name: action.name, img: action.img, description: action.description, price: action.price, timePeriod: action.timePeriod }]
 
     case "REMOVE":
       let newArr = [...state]
       newArr.splice(action.index, 1)
       return newArr
 
-    case "UPDATE":
-      let arr = [...state]
-      arr.find((item, index) => {
-        if (item.id === action.id) {
-          arr[index] = { ...item, qty: parseInt(action.qty) + item.qty, price: action.price + item.price }
-        }
-        return arr
-      })
-      return arr
+    // case "UPDATE":
+    //   let arr = [...state]
+    //   arr.find((item, index) => {
+    //     if (item.id === action.id) {
+    //       arr[index] = { ...item, qty: parseInt(action.qty) + item.qty, price: action.price + item.price }
+    //     }
+    //     return arr
+    //   })
+    //   return arr
 
 
     case "DROP":
