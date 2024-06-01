@@ -22,6 +22,8 @@ export default function Home() {
     const product = response.product;
     setitemCategory(category);
     setItem(product);
+    console.log(Item)
+
   }
 
   useEffect(() => {
@@ -50,7 +52,7 @@ export default function Home() {
                   <div key={data._id} className='fs-3 m-3'>{data.name}</div>
                   <hr></hr>
                   {Item == [] ? "" : Item.filter((item) =>
-                    (item.CategoryName === data.name) && (item.name.toLowerCase().includes(search.toLowerCase()))
+                    (item.categoryName === data.name) && (item.name.toLowerCase().includes(search.toLowerCase()))
                   ).map((filterItems) => {
                     return (
                       <div key={filterItems._id} className='col-12 col-md-6 col-lg-3'>

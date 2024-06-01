@@ -13,7 +13,6 @@ export default function Cart() {
     )
   }
 
-
   const handleCheckOut = async () => {
     let userEmail = localStorage.getItem("userEmail");
     console.log(data, userEmail, new Date());
@@ -45,8 +44,6 @@ export default function Cart() {
             <tr>
               <th scope='col' >#</th>
               <th scope='col' >Name</th>
-              <th scope='col' >Quantity</th>
-              <th scope='col' >Option</th>
               <th scope='col' >Amount</th>
               <th scope='col' ></th>
             </tr>

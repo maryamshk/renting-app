@@ -14,7 +14,7 @@ export default function Card(props) {
       }
     }
 
-    await dispatch({ type: "ADD", id: props.Item._id, name: props.Item.name, price: props.Item.price, timePeriod: props.Item.timePeriod })
+    await dispatch({ type: "ADD", id: props.Item._id, name: props.Item.name, price: props.Item.price })
   }
 
   return (
@@ -26,7 +26,6 @@ export default function Card(props) {
             <h5 className="card-title">{props.Item.name}</h5>
             <p>{props.Item.description}</p>
             <p>{props.Item.price}</p>
-            <p>{props.Item.timePeriod}</p>
             <hr></hr>
             <button className='btn btn-success justify-center ms-2' onClick={handleAddToCart}>Rent</button>
           </div>

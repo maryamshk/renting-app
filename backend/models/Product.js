@@ -23,11 +23,8 @@ const ProductSchema = new mongoose.Schema({
 
   price: {
     type: Number,
-  },
-
-  timePeriod: {
-    type: String,
   }
+
 })
 
 const Product = mongoose.model('product', ProductSchema)
