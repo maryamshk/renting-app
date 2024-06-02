@@ -9,21 +9,36 @@ export default function MyOrder() {
     const userEmail = localStorage.getItem('userEmail');
     console.log(userEmail);
 
-    const res = await fetch("http://localhost:5000/api/myOrderData", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email: userEmail })
-    });
+    try {
+      const res = await fetch("http://localhost:5000/api/myOrderData", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: userEmail })
+      });
 
-    const response = await res.json();
-    setOrderData(response.orderData);
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+      }
+
+      const response = await res.json();
+
+      if (response.orderData && response.orderData.order_data) {
+        setOrderData(response.orderData.order_data);
+      } else {
+        setOrderData([]);
+      }
+    } catch (error) {
+      console.error('Error fetching order data:', error);
+      setOrderData([]);
+    }
   };
 
   useEffect(() => {
     fetchMyOrder();
   }, []);
+
 
   return (
     <div>
@@ -60,7 +75,7 @@ export default function MyOrder() {
               ))
             ))
           ) : (
-            <div>No orders found</div>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '5rem', color: '#ff7e5f', fontSize: '1rem' }}>No orders found</div>
           )}
         </div>
       </div>
