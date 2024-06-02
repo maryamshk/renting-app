@@ -6,6 +6,8 @@ import { useCart } from '../components/ContextReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
+import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
+
 
 export default function Navbar({ search, setSearch }) {
   let data = useCart();
@@ -21,7 +23,7 @@ export default function Navbar({ search, setSearch }) {
     <>
       <Header>
         <Logo>
-          <img src="../ecomlogo.png" alt="Logo" style={{ width: '70px' }} />
+          <FontAwesomeIcon icon={faCartPlus} style={{ color: 'white' }} />
           <LogoText>RentEase</LogoText>
         </Logo>
         <NavLinks>
@@ -74,7 +76,6 @@ const Logo = styled.div`
   align-items: center;
   font-size: 3rem;
   font-family: 'Roboto', sans-serif;
-  color: white;
 `;
 
 const LogoText = styled.span`
@@ -82,7 +83,7 @@ const LogoText = styled.span`
   font-size: 3rem;
   font-weight: 450;
   font-family: 'Roboto', sans-serif;
-  color: black
+  color: white
 `;
 
 const NavLinks = styled.div`
