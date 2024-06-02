@@ -9,6 +9,8 @@ import Signup from './screens/Signup.js';
 import { CartProvider } from './components/ContextReducer.js';
 import MyOrder from './screens/MyOrder.js';
 import Seller from './screens/Seller.js';
+import About from './screens/About.js';
+
 
 
 function App() {
@@ -22,8 +24,7 @@ function App() {
             <Route exact path='createuser' element={<Signup />} />
             <Route exact path='myOrder' element={<MyOrder />} />
             <Route exact path='seller' element={<Seller />} />
-
-
+            <Route exact path='about' element={<About />} />
           </Routes>
         </div>
       </Router>

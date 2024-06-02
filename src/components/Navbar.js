@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 
-export default function Navbar({ search, setSearch }) {
+export default function Navbar() {
   let data = useCart();
   const [cartView, setCartView] = useState(false);
   const navigate = useNavigate();
@@ -25,10 +25,10 @@ export default function Navbar({ search, setSearch }) {
           <LogoText>RentEase</LogoText>
         </Logo>
         <NavLinks>
+          <NavLink to="/about">About</NavLink>
           <NavLink to="/">Home</NavLink>
           <NavLink to="/myOrder">Rented Items</NavLink>
           <NavLink to="/seller">Become a Seller</NavLink>
-          <NavLink to="/help-support">Help & Support</NavLink>
         </NavLinks>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <CartButton onClick={() => { setCartView(true); }}>
@@ -43,20 +43,10 @@ export default function Navbar({ search, setSearch }) {
 
         </div>
       </Header>
-      <SearchContainer>
-        <SearchInput
-          type="search"
-          placeholder="Search in RentEase"
-          value={search}
-          onChange={(e) => { setSearch(e.target.value); }}
-        />
-      </SearchContainer>
+
     </>
   );
 }
-
-
-
 
 
 const Header = styled.nav`
@@ -82,12 +72,13 @@ const LogoText = styled.span`
   font-size: 3rem;
   font-weight: 450;
   font-family: 'Roboto', sans-serif;
-  color: black
+  color: white
 `;
 
 const NavLinks = styled.div`
   display: flex;
   align-items: center;
+  text-decoration:none
 `;
 
 const NavLink = styled(Link)`
@@ -98,7 +89,7 @@ const NavLink = styled(Link)`
   font-weight: 450;
   font-family: 'Roboto', sans-serif;
   &:hover {
-    text-decoration: underline;
+    color: #FFFFF7;
   }
 `;
 
@@ -128,21 +119,3 @@ const CartButton = styled(Button)`
 
 
 
-const SearchContainer = styled.div`
-  background: linear-gradient(135deg, #ff7e5f, #feb47b);
-  padding: 15px 30px;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-`;
-
-const SearchInput = styled.input`
-  width: 50%;
-  padding: 10px;
-  border-radius: 20px;
-  border: none;
-  outline: none;
-  padding-left: 15px;
-  font-size: 1rem;
-  font-family: 'Roboto', sans-serif;
-`;

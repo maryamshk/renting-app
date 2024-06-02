@@ -59,7 +59,15 @@ export default function Home() {
 
   return (
     <>
-      <Navbar search={search} setSearch={setSearch} />
+      <Navbar />
+      <SearchContainer>
+        <SearchInput
+          type="search"
+          placeholder="Search in RentEase"
+          value={search}
+          onChange={(e) => { setSearch(e.target.value); }}
+        />
+      </SearchContainer>
       <Container>
         <CategoriesContainer>
           <CategoriesList>
@@ -122,6 +130,26 @@ export default function Home() {
     </>
   );
 }
+
+
+const SearchContainer = styled.div`
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  padding: 15px 30px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;
+
+const SearchInput = styled.input`
+  width: 50%;
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  padding-left: 15px;
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+`;
 
 
 
