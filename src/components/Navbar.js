@@ -57,10 +57,6 @@ export default function Navbar({ search, setSearch }) {
   );
 }
 
-
-
-
-
 const Header = styled.nav`
   background: linear-gradient(135deg, #ff7e5f, #feb47b);
   display: flex;

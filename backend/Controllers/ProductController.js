@@ -1,5 +1,5 @@
 const Product = require('../models/Product');
-const Category = require('../models/Category')
+const Category = require('../models/Category');
 
 module.exports.CreateProduct = async (req, res) => {
   try {
@@ -7,47 +7,31 @@ module.exports.CreateProduct = async (req, res) => {
     if (!categoryName || !name || !img || !description || !price) {
       return res.status(400).send("Missing required credentials");
     }
-    const product = Product.create(
-      {
-        categoryName,
-        name,
-        img,
-        description,
-        price
-      }
-    )
+    const product = await Product.create({ categoryName, name, img, description, price });
+
     if (product) {
-      res.status(200)
-      res.send("product created successfully");
+      return res.status(200).send("Product created successfully");
+    } else {
+      return res.status(400).send("Product not created");
     }
-
-    else {
-      res.status(400).send("product not created");
-    }
-  }
-
-  catch (err) {
+  } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error')
+    return res.status(500).send('Server Error');
   }
-
 }
 
 module.exports.getProduct = async (req, res) => {
   try {
-    const product = await Product.find({});
-    const category = await Category.find({});
-    if (product && category) {
-      res.status(200).send({ product: product, category: category });
-    }
+    const products = await Product.find({});
+    const categories = await Category.find({});
 
-    else {
-      res.status(404).send('product not found')
+    if (products.length > 0 && categories.length > 0) {
+      return res.status(200).json({ products, categories });
+    } else {
+      return res.status(404).send('Products or categories not found');
     }
-  }
-
-  catch (error) {
+  } catch (error) {
     console.error(error.message);
-    res.send('Server Error')
+    return res.status(500).send('Server Error');
   }
 }
