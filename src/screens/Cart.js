@@ -7,7 +7,7 @@ import { useCart, useDispatchCart } from '../components/ContextReducer';
 export default function Cart() {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [weekendUse, setWeekendUse] = useState({ saturday: false, sunday: false });
+
   let data = useCart();
   let dispatch = useDispatchCart();
 
@@ -40,7 +40,6 @@ export default function Cart() {
           email: userEmail,
           order_date: new Date().toDateString(),
           rental_period: { start: startDate, end: endDate },
-          weekend_use: weekendUse,
         }),
       });
       console.log('JSON RESPONSE:', response.status);
@@ -51,10 +50,7 @@ export default function Cart() {
   };
 
   const rentalDays = calculateDays(startDate, endDate);
-  const totalPrice = data.reduce((total, item) => total + item.price, 0);
-  const weekendPrice = (weekendUse.saturday ? 50 : 0) + (weekendUse.sunday ? 50 : 0);
-  const rentalPrice = rentalDays * 60;
-  const finalPrice = totalPrice + rentalPrice + weekendPrice;
+  const totalPrice = data.reduce((total, item) => total + item.price * rentalDays, 0);
 
   return (
     <div>
@@ -91,16 +87,8 @@ export default function Cart() {
             ))}
           </tbody>
         </table>
-        <div className='mt-3'>
-          <label>
-            <input type='checkbox' checked={weekendUse.saturday} onChange={() => setWeekendUse({ ...weekendUse, saturday: !weekendUse.saturday })} /> Saturday
-          </label>
-          <label className='ml-2'>
-            <input type='checkbox' checked={weekendUse.sunday} onChange={() => setWeekendUse({ ...weekendUse, sunday: !weekendUse.sunday })} /> Sunday
-          </label>
-        </div>
         <div>
-          <h1 className='fs-2'>Total Price: ${finalPrice}/-</h1>
+          <h1 className='fs-2'>Total Price: ${totalPrice}/-</h1>
         </div>
         <div>
           <button className='btn bg-success mt-5' onClick={handleCheckOut}>

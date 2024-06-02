@@ -1,6 +1,3 @@
-
-
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Modal from '../Modal';
@@ -8,6 +5,7 @@ import Cart from '../screens/Cart';
 import { useCart } from '../components/ContextReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
 
 export default function Navbar({ search, setSearch }) {
   let data = useCart();
@@ -20,46 +18,131 @@ export default function Navbar({ search, setSearch }) {
   };
 
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="container-fluid">
-          <Link className="navbar-brand" to="/" style={{ fontSize: "2rem", fontFamily: "Prompt", color: "#686868" }}>RentEase</Link>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div className="navbar-nav mr-auto">
-              <Link className="nav-link fs-5" aria-current="page" to="/">Home</Link>
-              <Link className="nav-link fs-5" aria-current="page" to="/myOrder">Rented Items</Link>
-            </div>
-            <div className="ms-auto d-flex">
-              <div style={{ marginRight: "10px", width: '17rem', backgroundColor: '#f0f0f0' }}>
-                <input
-                  style={{ borderRadius: '5px', backgroundColor: '#f0f0f0', outline: 'none', boxShadow: 'none' }}
-                  className="form-control me-2"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                  value={search}
-                  onChange={(e) => { setSearch(e.target.value); }}
-                />
-              </div>
-              <button onClick={() => { setCartView(true); }} style={{ backgroundColor: 'transparent', borderRadius: '20px', padding: '5px 20px', border: '2px solid #BEBEBE', color: '#606060', marginRight: "3px" }}>Cart {""}
-                <FontAwesomeIcon icon={faShoppingCart} style={{ color: 'black' }} />
-              </button>
-              <div className="navbar-nav mr-auto">
-                <Link className="nav-link fs-5" aria-current="page" to="/seller">Seller</Link>
-              </div>
-              {cartView && (
-                <Modal onClose={() => { setCartView(false); }}>
-                  <Cart />
-                </Modal>
-              )}
-              <button onClick={handleLogout} style={{ backgroundColor: 'transparent', borderRadius: '20px', padding: '5px 20px', border: '2px solid #BEBEBE', color: '#606060', marginRight: '2px' }}>Logout</button>
-            </div>
-          </div>
+    <>
+      <Header>
+        <Logo>
+          <img src="../ecomlogo.png" alt="Logo" style={{ width: '70px' }} />
+          <LogoText>RentEase</LogoText>
+        </Logo>
+        <NavLinks>
+          <NavLink to="/">Home</NavLink>
+          <NavLink to="/myOrder">Rented Items</NavLink>
+          <NavLink to="/seller">Become a Seller</NavLink>
+          <NavLink to="/help-support">Help & Support</NavLink>
+        </NavLinks>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <CartButton onClick={() => { setCartView(true); }}>
+            <FontAwesomeIcon icon={faShoppingCart} style={{ color: 'white' }} />
+          </CartButton>
+          {cartView && (
+            <Modal onClose={() => { setCartView(false); }}>
+              <Cart />
+            </Modal>
+          )}
+          <button onClick={handleLogout} style={{ backgroundColor: 'transparent', borderRadius: '20px', padding: '5px 20px', border: '2px solid white', color: 'white', marginLeft: '12px' }}>Logout</button>
+
         </div>
-      </nav>
-    </div>
+      </Header>
+      <SearchContainer>
+        <SearchInput
+          type="search"
+          placeholder="Search in RentEase"
+          value={search}
+          onChange={(e) => { setSearch(e.target.value); }}
+        />
+      </SearchContainer>
+    </>
   );
 }
+
+
+
+
+
+const Header = styled.nav`
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 30px;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`;
+
+const Logo = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 3rem;
+  font-family: 'Roboto', sans-serif;
+  color: white;
+`;
+
+const LogoText = styled.span`
+  margin-left: 10px;
+  font-size: 3rem;
+  font-weight: 450;
+  font-family: 'Roboto', sans-serif;
+  color: black
+`;
+
+const NavLinks = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const NavLink = styled(Link)`
+  color: white;
+  text-decoration: none;
+  margin: 0 15px;
+  font-size: 1.5rem;
+  font-weight: 450;
+  font-family: 'Roboto', sans-serif;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const Button = styled.button`
+  background-color: #ff7e5f;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 15px;
+  color: white;
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+  &:hover {
+    background-color: #feb47b;
+  }
+`;
+
+const CartButton = styled(Button)`
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+`;
+
+
+
+const SearchContainer = styled.div`
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  padding: 15px 30px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;
+
+const SearchInput = styled.input`
+  width: 50%;
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  padding-left: 15px;
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+`;

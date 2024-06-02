@@ -64,7 +64,7 @@ export default function MyOrder() {
                           <h5 className="card-title">{item.name}</h5>
                           <div className='container w-100 p-0' style={{ height: "38px" }}>
                             <div className='d-inline ms-2 h-100 w-20 fs-5'>
-                              ₹{item.price}/-
+                              ${item.price}/-
                             </div>
                           </div>
                         </div>

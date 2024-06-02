@@ -6,7 +6,7 @@ export default function Carousal() {
       id="carouselExampleFade"
       className="carousel slide carousel-fade"
       data-bs-ride="carousel"
-      style={{ height: '88vh', width: '100vw' }}
+      style={{ height: '50vh', width: '100%' }}
     >
       <div className="carousel-inner" style={{ height: '100%' }}>
         <div className="carousel-item active" style={{ height: '100%' }}>
@@ -93,27 +93,3 @@ export default function Carousal() {
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
