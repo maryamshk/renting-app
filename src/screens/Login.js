@@ -221,14 +221,12 @@ const Login = () => {
       });
 
       const json = await response.json();
-      console.log(json);
 
       if (!json.success) {
         setValidationError('Enter valid credentials');
       } else {
         localStorage.setItem("authToken", json.authToken);
         localStorage.setItem('userEmail', credentials.email);
-        console.log(localStorage.getItem("authToken"));
         navigate("/");
       }
     } catch (error) {

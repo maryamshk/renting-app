@@ -28,7 +28,6 @@ export default function Cart() {
 
   const handleCheckOut = async () => {
     let userEmail = localStorage.getItem('userEmail');
-    console.log(data, userEmail, new Date());
     try {
       let response = await fetch('http://localhost:5000/api/orderData', {
         method: 'POST',
@@ -38,11 +37,10 @@ export default function Cart() {
         body: JSON.stringify({
           order_data: data,
           email: userEmail,
-          order_date: new Date().toDateString(),
-          rental_period: { start: startDate, end: endDate },
+          total_price: totalPrice
+
         }),
       });
-      console.log('JSON RESPONSE:', response.status);
       dispatch({ type: 'DROP' });
     } catch (error) {
       console.error('Error:', error);
@@ -54,7 +52,6 @@ export default function Cart() {
 
   return (
     <div>
-      {console.log(data)}
       <div className='container m-auto mt-5 table-responsive table-responsive-sm table-responsive-md'>
         <table className='table table-hover'>
           <thead className='text-success fs-4'>

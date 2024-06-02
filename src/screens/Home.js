@@ -25,8 +25,6 @@ export default function Home() {
       const product = response.product;  // Extract products
       setitemCategory(category);
       setItem(product);  // Set products
-      console.log("Loaded Categories:", category);
-      console.log("Loaded Products:", product);
     } catch (error) {
       console.error("Error fetching data:", error);
     }

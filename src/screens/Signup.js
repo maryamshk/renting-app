@@ -46,7 +46,6 @@ const Signup = () => {
       });
 
       const json = await response.json();
-      console.log(json);
 
       if (!json.success) {
         setValidationError("Failed to create account. Please check your credentials and try again.");

@@ -20,10 +20,10 @@ export default function Card(props) {
   return (
     <div>
       <div>
-        <div className="card mt-3" style={{ width: '18rem', maxHeight: '450px', marginBottom: '2rem' }}>
+        <div className="card mt-3" style={{ width: '18rem', maxHeight: '500px', marginBottom: '2rem' }}>
           <img src={props.Item.img} className="card-img-top" alt="..." style={{ height: "120px", objectFit: "fill" }} />
           <div className="card-body">
-            <h5 className="card-title">{props.Item.name}</h5>
+            <h5 className="card-title" style={{ height: '3.5rem' }}>{props.Item.name}</h5>
             <p style={{ height: '10rem' }}>{props.Item.description}</p>
             <p>${props.Item.price}/day</p>
             <hr></hr>

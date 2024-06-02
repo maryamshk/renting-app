@@ -7,10 +7,9 @@ module.exports.orderData = async (req, res) => {
     let existingOrder = await Order.findOne({ email: req.body.email });
     if (existingOrder === null) {
       try {
-        console.log('creating');
         await Order.create({
           email: req.body.email,
-          order_data: [orderData]
+          order_data: [orderData],
         });
         res.json({ success: true });
       } catch (err) {
@@ -21,7 +20,7 @@ module.exports.orderData = async (req, res) => {
       try {
         await Order.findOneAndUpdate(
           { email: req.body.email },
-          { $push: { order_data: orderData } }
+          { $push: { order_data: orderData } },
         );
         res.json({ success: true });
       } catch (err) {

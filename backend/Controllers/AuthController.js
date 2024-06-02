@@ -23,7 +23,6 @@ module.exports.createUser = async (req, res) => {
 
     res.json({ success: true });
   } catch (error) {
-    console.log(error);
     res.json({ success: false });
   }
 }
@@ -67,7 +66,6 @@ module.exports.loginUser = async (req, res) => {
     const authToken = jwt.sign(data, jwtsecret)
     res.json({ success: true, authToken: authToken });
   } catch (error) {
-    console.log(error);
     res.json({ success: false });
   }
 }
