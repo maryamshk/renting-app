@@ -34,6 +34,15 @@ module.exports.loginUser = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
   let email = req.body.email;
+  let password = req.body.password;
+
+  if (!email) {
+    res.status(400).send("Email is required");
+  }
+
+  if (!password) {
+    res.status(400).send("password is required");
+  }
   try {
     let userData = await User.findOne({ email });
     if (!userData) {
@@ -42,7 +51,7 @@ module.exports.loginUser = async (req, res) => {
         .json({ errors: 'Try logging with correct credentials' });
     }
 
-    const comparepassword = await bcrypt.compare(req.body.password, userData.password);
+    const comparepassword = await bcrypt.compare(password, userData.password);
     if (!comparepassword) {
       return res
         .status(400)

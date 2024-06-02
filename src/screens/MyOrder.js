@@ -18,7 +18,7 @@ export default function MyOrder() {
     });
 
     const response = await res.json();
-    setOrderData(response.orderData.order_data);
+    setOrderData(response.orderData);
   };
 
   useEffect(() => {

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { GoogleLoginButton, FacebookLoginButton } from 'react-social-login-buttons';
 
 const Container = styled.div`
   display: flex;
@@ -128,13 +127,6 @@ const Button = styled.button`
   }
 `;
 
-const SocialLogin = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 1rem;
-  width: 100%;
-`;
 
 const OrDivider = styled.div`
   margin: 1rem;
@@ -145,18 +137,6 @@ const OrDivider = styled.div`
   font-weight: normal;
 `;
 
-const StyledGoogleLoginButton = styled(GoogleLoginButton)`
-  width: 100%;
-  margin-bottom: 1rem;
-  border-radius: 10px !important;
-  max-width: 400px;
-`;
-
-const StyledFacebookLoginButton = styled(FacebookLoginButton)`
-  width: 100%;
-  border-radius: 10px !important;
-  max-width: 400px;
-`;
 
 const Footer = styled.div`
   font-size: 1.25rem;
@@ -215,40 +195,45 @@ const ErrorMessage = styled.p`
 `;
 
 
+
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
+  const [validationError, setValidationError] = useState(null);
   const [passwordVisible, setPasswordVisible] = useState(false);
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
+    setValidationError(null);
 
+    try {
+      const response = await fetch('http://localhost:5000/api/loginuser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: credentials.email,
+          password: credentials.password,
+        }),
+      });
 
-    const response = await fetch('http://localhost:5000/api/loginuser', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: credentials.email,
-        password: credentials.password,
-      }),
-    });
+      const json = await response.json();
+      console.log(json);
 
-    const json = await response.json();
-    console.log(json);
-
-    if (!json.success) {
-      alert('Enter valid credentials');
-    } else {
-      localStorage.setItem("authToken", json.authToken);
-      localStorage.setItem('userEmail', credentials.email);
-      console.log(localStorage.getItem("authToken"));
-      navigate("/");
+      if (!json.success) {
+        setValidationError('Enter valid credentials');
+      } else {
+        localStorage.setItem("authToken", json.authToken);
+        localStorage.setItem('userEmail', credentials.email);
+        console.log(localStorage.getItem("authToken"));
+        navigate("/");
+      }
+    } catch (error) {
+      setValidationError('An error occurred. Please try again later.');
     }
-
   };
 
   const onChange = (event) => {
@@ -263,7 +248,7 @@ const Login = () => {
     <Container>
       <LeftPane>
         <Heading>Your One-Stop Rental Marketplace.</Heading>
-        <SubHeading>"Simplify your life by renting anything you need, all in one place, with ease, security, convenience, and affordable rates, connecting you with trusted providers for a seamless experience."</SubHeading>
+        <SubHeading>Simplify your life by renting anything you need, all in one place, with ease, security, convenience, and affordable rates, connecting you with trusted providers for a seamless experience.</SubHeading>
         <Image src="../imagee.png" alt="Illustration" />
       </LeftPane>
       <RightPane>
@@ -297,14 +282,9 @@ const Login = () => {
             </ToggleButton>
           </PasswordWrapper>
           {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
-          <StyledLink to="#">Forgot password?</StyledLink>
+          {validationError && <ErrorMessage>{validationError}</ErrorMessage>}
           <Button type="submit">Login</Button>
         </Form>
-        <OrDivider>Or, login with</OrDivider>
-        <SocialLogin>
-          <StyledGoogleLoginButton onClick={() => alert("Google login clicked")} />
-          <StyledFacebookLoginButton onClick={() => alert("Facebook login clicked")} />
-        </SocialLogin>
         <Footer>
           Don't have an account? <StyledLink to="/createuser">Signup</StyledLink>
         </Footer>
