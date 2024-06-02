@@ -47,6 +47,9 @@ export default function Navbar({ search, setSearch }) {
               <button onClick={() => { setCartView(true); }} style={{ backgroundColor: 'transparent', borderRadius: '20px', padding: '5px 20px', border: '2px solid #BEBEBE', color: '#606060', marginRight: "3px" }}>Cart {""}
                 <FontAwesomeIcon icon={faShoppingCart} style={{ color: 'black' }} />
               </button>
+              <div className="navbar-nav mr-auto">
+                <Link className="nav-link fs-5" aria-current="page" to="/seller">Seller</Link>
+              </div>
               {cartView && (
                 <Modal onClose={() => { setCartView(false); }}>
                   <Cart />
