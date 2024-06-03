@@ -21,8 +21,8 @@ export default function Cart() {
 
   const calculateDays = (start, end) => {
     if (!start || !end) return 0;
-    const diffTime = Math.abs(end - start);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+    const diffTime = Math.abs(end - start);    //difference of one object from another in milliseconds 
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;   //convert milliseconds difference into day difference
     return diffDays;
   };
 

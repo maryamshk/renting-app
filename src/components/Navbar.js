@@ -28,7 +28,7 @@ export default function Navbar() {
           <NavLink to="/about">About</NavLink>
           <NavLink to="/">Home</NavLink>
           <NavLink to="/myOrder">Rented Items</NavLink>
-          <NavLink to="/seller">Become a Seller</NavLink>
+          <NavLink to="/seller">Become a Renter</NavLink>
         </NavLinks>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <CartButton onClick={() => { setCartView(true); }}>

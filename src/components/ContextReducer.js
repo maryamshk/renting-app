@@ -16,17 +16,6 @@ const reducer = (state, action) => {
       newArr.splice(action.index, 1)
       return newArr
 
-    // case "UPDATE":
-    //   let arr = [...state]
-    //   arr.find((item, index) => {
-    //     if (item.id === action.id) {
-    //       arr[index] = { ...item, qty: parseInt(action.qty) + item.qty, price: action.price + item.price }
-    //     }
-    //     return arr
-    //   })
-    //   return arr
-
-
     case "DROP":
       let empArr = [];
       return empArr
