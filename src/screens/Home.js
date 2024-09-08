@@ -12,6 +12,7 @@ export default function Home() {
   const [Item, setItem] = useState([]);
 
   const loadData = async () => {
+<<<<<<< Updated upstream
     try {
       let response = await fetch('http://localhost:5000/api/product', {
         method: "GET",
@@ -29,6 +30,21 @@ export default function Home() {
       console.error("Error fetching data:", error);
     }
   }
+=======
+    let response = await fetch('http://localhost:5000/api/product', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    response = await response.json();
+    const category = response.category;
+    const product = response.product;
+    setitemCategory(category);
+    setItem(product);
+  };
+>>>>>>> Stashed changes
 
   useEffect(() => {
     loadData();
@@ -118,7 +134,48 @@ export default function Home() {
         ))}
       </div>
 
+<<<<<<< Updated upstream
       <Footer />
+=======
+      <div>
+        <Carousal search={search} setSearch={setSearch} />
+      </div>
+
+      <div className="container">
+        {
+          itemCategory.length === 0
+            ? ""
+            : itemCategory.map((data) => {
+              return (
+                <div key={data._id} className='mb-3 row'>
+                  <div className='fs-3 m-3'>{data.name}</div>
+                  <hr />
+                  {
+                    Item.length === 0
+                      ? ""
+                      : Item.filter((item) =>
+                          item.CategoryName === data.name && item.name.toLowerCase().includes(search.toLowerCase())
+                        ).map((filterItems) => {
+                          return (
+                            <div key={filterItems._id} className='col-12 col-md-6 col-lg-3'>
+                              <Card
+                                Item={filterItems}
+                                option={filterItems.options[0]}
+                              />
+                            </div>
+                          );
+                        })
+                  }
+                </div>
+              );
+            })
+        }
+      </div>
+      
+      <div>
+        <Footer />
+      </div>
+>>>>>>> Stashed changes
     </>
   );
 }

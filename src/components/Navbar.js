@@ -43,6 +43,59 @@ export default function Navbar({ search, setSearch }) {
           )}
           <button onClick={handleLogout} style={{ backgroundColor: 'transparent', borderRadius: '20px', padding: '5px 20px', border: '2px solid white', color: 'white', marginLeft: '12px' }}>Logout</button>
 
+<<<<<<< Updated upstream
+=======
+                <div className="navbar-nav mr-auto">
+                  <Link className="nav-link fs-5" aria-current="page" to="/myOrder">Rented Items</Link>
+                </div>
+                <div className="navbar-nav mr-auto">
+                <Link className="nav-link fs-5" aria-current="page" to="/Seller">Seller</Link>
+                </div>
+              </>
+
+
+
+            ) :
+              ""
+            }
+
+            {!localStorage.getItem("authToken") ? (
+              <>
+                <div className='ms-auto'>
+                  <Link to="/login">
+                    <button style={{ backgroundColor: 'transparent', borderRadius: '20px', padding: '5px 20px', border: '2px solid #BEBEBE', color: '#606060', marginRight: '2px' }}>Login</button>
+                  </Link>
+                  <Link to="/Seller">
+                    <button style={{ backgroundColor: 'transparent', borderRadius: '20px', padding: '5px 20px', border: '2px solid #BEBEBE', color: '#606060', marginRight: '2px' }}>Seller</button>
+                  </Link>
+
+                  <Link to="/createuser">
+                    <button style={{ backgroundColor: 'transparent', borderRadius: '20px', padding: '5px 20px', border: '2px solid #BEBEBE', color: '#606060' }}>SignUp</button>
+                  </Link>
+                </div>
+              </>
+
+            ) :
+              <>
+                <div className='ms-auto'>
+                  <button onClick={() => { setCartView(true) }} style={{ backgroundColor: 'transparent', borderRadius: '20px', padding: '5px 20px', border: '2px solid #BEBEBE', color: '#606060', marginRight: "3px" }}>Cart {""}
+                    <FontAwesomeIcon icon={faShoppingCart} style={{ color: 'black' }} />
+                  </button>
+
+                  {cartView ?
+                    <Modal onClose={() => { setCartView(false) }}>
+                      <Cart></Cart>
+                    </Modal>
+                    : null}
+
+                  <button onClick={handleLogout} style={{ backgroundColor: 'transparent', borderRadius: '20px', padding: '5px 20px', border: '2px solid #BEBEBE', color: '#606060', marginRight: '2px' }}>Logout</button>
+                </div>
+
+              </>
+
+            }
+          </div>
+>>>>>>> Stashed changes
         </div>
       </Header>
       <SearchContainer>

@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+<<<<<<< Updated upstream
+=======
+import { GoogleLoginButton, FacebookLoginButton } from 'react-social-login-buttons';
+>>>>>>> Stashed changes
 
 const Container = styled.div`
   display: flex;
@@ -127,6 +131,16 @@ const Button = styled.button`
   }
 `;
 
+<<<<<<< Updated upstream
+=======
+const SocialLogin = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+  width: 100%;
+`;
+>>>>>>> Stashed changes
 
 const OrDivider = styled.div`
   margin: 1rem;
@@ -137,6 +151,21 @@ const OrDivider = styled.div`
   font-weight: normal;
 `;
 
+<<<<<<< Updated upstream
+=======
+const StyledGoogleLoginButton = styled(GoogleLoginButton)`
+  width: 100%;
+  margin-bottom: 1rem;
+  border-radius: 10px !important;
+  max-width: 400px;
+`;
+
+const StyledFacebookLoginButton = styled(FacebookLoginButton)`
+  width: 100%;
+  border-radius: 10px !important;
+  max-width: 400px;
+`;
+>>>>>>> Stashed changes
 
 const Footer = styled.div`
   font-size: 1.25rem;
@@ -195,17 +224,24 @@ const ErrorMessage = styled.p`
 `;
 
 
+<<<<<<< Updated upstream
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const [validationError, setValidationError] = useState(null);
+=======
+const Login = () => {
+  const [credentials, setCredentials] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState({});
+>>>>>>> Stashed changes
   const [passwordVisible, setPasswordVisible] = useState(false);
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
+<<<<<<< Updated upstream
     setValidationError(null);
 
     try {
@@ -232,6 +268,32 @@ const Login = () => {
     } catch (error) {
       setValidationError('An error occurred. Please try again later.');
     }
+=======
+
+    const response = await fetch('http://localhost:5000/api/loginuser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: credentials.email,
+        password: credentials.password,
+      }),
+    });
+
+    const json = await response.json();
+    console.log(json);
+
+    if (!json.success) {
+      setErrors({ email: "Invalid email or password", password: "Invalid email or password" });
+    } else {
+      localStorage.setItem("authToken", json.authToken);
+      localStorage.setItem('userEmail', credentials.email);
+      console.log(localStorage.getItem("authToken"));
+      navigate("/");
+    }
+
+>>>>>>> Stashed changes
   };
 
   const onChange = (event) => {
@@ -246,7 +308,11 @@ const Login = () => {
     <Container>
       <LeftPane>
         <Heading>Your One-Stop Rental Marketplace.</Heading>
+<<<<<<< Updated upstream
         <SubHeading>Simplify your life by renting anything you need, all in one place, with ease, security, convenience, and affordable rates, connecting you with trusted providers for a seamless experience.</SubHeading>
+=======
+        <SubHeading>"Simplify your life by renting anything you need, all in one place, with ease, security, convenience, and affordable rates, connecting you with trusted providers for a seamless experience."</SubHeading>
+>>>>>>> Stashed changes
         <Image src="../imagee.png" alt="Illustration" />
       </LeftPane>
       <RightPane>
@@ -280,9 +346,20 @@ const Login = () => {
             </ToggleButton>
           </PasswordWrapper>
           {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
+<<<<<<< Updated upstream
           {validationError && <ErrorMessage>{validationError}</ErrorMessage>}
           <Button type="submit">Login</Button>
         </Form>
+=======
+          <StyledLink to="#">Forgot password?</StyledLink>
+          <Button type="submit">Login</Button>
+        </Form>
+        <OrDivider>Or, login with</OrDivider>
+        <SocialLogin>
+          <StyledGoogleLoginButton onClick={() => alert("Google login clicked")} />
+          <StyledFacebookLoginButton onClick={() => alert("Facebook login clicked")} />
+        </SocialLogin>
+>>>>>>> Stashed changes
         <Footer>
           Don't have an account? <StyledLink to="/createuser">Signup</StyledLink>
         </Footer>
@@ -291,4 +368,8 @@ const Login = () => {
   );
 };
 
+<<<<<<< Updated upstream
 export default Login;
+=======
+export default Login;
+>>>>>>> Stashed changes
